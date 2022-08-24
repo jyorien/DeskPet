@@ -12,7 +12,10 @@
   "tauri": {
     "macOSPrivateApi": true,
     "allowlist": {
-      "all": true
+      "all": true,
+      "window": {
+        "all": true
+      }
     },
     "bundle": {
       "active": true,
@@ -56,12 +59,12 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 256,
+        "height": 64,
         "resizable": true,
         "title": "DeskPet",
-        "width": 256,
-        "transparent": true,
+        "width": 64,
         "decorations": false,
+        "transparent": true,
         "x": 0,
         "y": 0
       }
