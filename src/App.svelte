@@ -7,13 +7,14 @@
     type Monitor,
   } from "@tauri-apps/api/window";
   import { onMount } from "svelte";
+  import { Direction } from "./lib/Direction";
   import Pet from "./lib/Pet.svelte";
 
   const interval = 350;
-  const movementSpeed = 4
+  const movementSpeed = 4;
   let positionX = 0;
   let positionY = 0;
-  let isBackward = false;
+  let direction = Direction.FORWARD;
 
   onMount(() => {
     moveWindow();
@@ -28,19 +29,42 @@
       size.height / scaleFactor
     );
     setInterval(() => {
-      if (positionX >= logicalSize.width) {
-        isBackward = true;
-      } else if (positionX == 0) {
-        isBackward = false;
+      // set movement direction
+      if (positionX == 0 && positionY == 0) {
+        direction = Direction.FORWARD;
+      } else if (positionX >= logicalSize.width / 1.15 && positionY == 0) {
+        direction = Direction.DOWN;
+      } else if (
+        positionX >= logicalSize.width / 1.15 &&
+        positionY >= logicalSize.height / 2
+      ) {
+        direction = Direction.BACKWARD;
+      } else if (positionX == 0 && positionY >= logicalSize.height / 2) {
+        direction = Direction.UP;
       }
-      if (isBackward) positionX -= movementSpeed; else positionX += movementSpeed;
+
+      // move according to direction
+      switch (direction) {
+        case Direction.FORWARD:
+          positionX += movementSpeed;
+          break;
+        case Direction.BACKWARD:
+          positionX -= movementSpeed;
+          break;
+        case Direction.UP:
+          positionY -= movementSpeed;
+          break;
+        case Direction.DOWN:
+          positionY += movementSpeed;
+          break;
+      }
       window.appWindow.setPosition(new LogicalPosition(positionX, positionY));
     }, interval);
   }
 </script>
 
 <main>
-  <Pet {isBackward} />
+  <Pet {direction} />
 </main>
 
 <style>
