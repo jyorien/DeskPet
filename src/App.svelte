@@ -1,7 +1,6 @@
 <script lang="ts">
   import { window } from "@tauri-apps/api";
   import { LogicalPosition, LogicalSize, PhysicalSize, type Monitor } from "@tauri-apps/api/window";
-  import { info } from "tauri-plugin-log-api";
   import { onMount } from "svelte";
   import Pet from "./lib/Pet.svelte";
 
