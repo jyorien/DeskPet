@@ -26,8 +26,8 @@
     const scaleFactor = monitor.scaleFactor;
     const size: PhysicalSize = monitor.size;
     const logicalSize: LogicalSize = new PhysicalSize(size.width, size.height).toLogical(scaleFactor);
-    const spriteWidth = 32;
-    const spriteHeight = 32;
+    const spriteSize = new LogicalSize(32, 32);
+    const bounds = new LogicalSize(logicalSize.width - spriteSize.width, logicalSize.height - spriteSize.height);
     setInterval(() => {
       // set movement direction
       if (
@@ -35,17 +35,17 @@
         positionY == 0) {
         direction = Direction.FORWARD;
       } else if (
-        positionX >= logicalSize.width - spriteWidth && 
+        positionX >= bounds.width && 
         positionY == 0) {
         direction = Direction.DOWN;
       } else if (
-        positionX >= logicalSize.width - spriteWidth &&
-        positionY >= logicalSize.height - spriteHeight
+        positionX >= bounds.width &&
+        positionY >= bounds.height
       ) {
         direction = Direction.BACKWARD;
       } else if (
         positionX == 0 && positionY >= 
-        logicalSize.height - spriteHeight) {
+        bounds.height) {
         direction = Direction.UP;
       }
 
