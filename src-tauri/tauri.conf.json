@@ -59,10 +59,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 64,
+        "height": 32,
         "resizable": true,
         "title": "DeskPet",
-        "width": 64,
+        "width": 32,
         "decorations": false,
         "transparent": true,
         "x": 0,

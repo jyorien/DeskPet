@@ -10,8 +10,8 @@
   import { Direction } from "./lib/Direction";
   import Pet from "./lib/Pet.svelte";
 
-  const interval = 350;
-  const movementSpeed = 4;
+  const interval = 50;
+  const movementSpeed = 2;
   let positionX = 0;
   let positionY = 0;
   let direction = Direction.FORWARD;
@@ -20,26 +20,32 @@
     moveWindow();
   });
   async function moveWindow() {
+    await window.appWindow.setSize(new LogicalSize(32,32));
     const monitors: Monitor[] = await window.availableMonitors();
     const monitor = monitors[0];
     const scaleFactor = monitor.scaleFactor;
     const size: PhysicalSize = monitor.size;
-    const logicalSize: LogicalSize = new LogicalSize(
-      size.width / scaleFactor,
-      size.height / scaleFactor
-    );
+    const logicalSize: LogicalSize = new PhysicalSize(size.width, size.height).toLogical(scaleFactor);
+    const spriteSize = new LogicalSize(32, 32);
+    const bounds = new LogicalSize(logicalSize.width - spriteSize.width, logicalSize.height - spriteSize.height);
     setInterval(() => {
       // set movement direction
-      if (positionX == 0 && positionY == 0) {
+      if (
+        positionX == 0 && 
+        positionY == 0) {
         direction = Direction.FORWARD;
-      } else if (positionX >= logicalSize.width / 1.15 && positionY == 0) {
+      } else if (
+        positionX >= bounds.width && 
+        positionY == 0) {
         direction = Direction.DOWN;
       } else if (
-        positionX >= logicalSize.width / 1.15 &&
-        positionY >= logicalSize.height / 2
+        positionX >= bounds.width &&
+        positionY >= bounds.height
       ) {
         direction = Direction.BACKWARD;
-      } else if (positionX == 0 && positionY >= logicalSize.height / 2) {
+      } else if (
+        positionX == 0 && positionY >= 
+        bounds.height) {
         direction = Direction.UP;
       }
 
