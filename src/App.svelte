@@ -11,7 +11,7 @@
   import Pet from "./lib/Pet.svelte";
 
   const interval = 350;
-  const movementSpeed = 64;
+  const movementSpeed = 5;
   let positionX = 0;
   let positionY = 0;
   let direction = Direction.FORWARD;
@@ -25,7 +25,7 @@
     const scaleFactor = monitor.scaleFactor;
     const size: PhysicalSize = monitor.size;
     const logicalSize: LogicalSize = new PhysicalSize(size.width, size.height).toLogical(scaleFactor);
-    console.log(logicalSize);
+
     setInterval(() => {
       // set movement direction
       if (
@@ -33,17 +33,17 @@
         positionY == 0) {
         direction = Direction.FORWARD;
       } else if (
-        positionX >= logicalSize.width && 
+        positionX >= logicalSize.width - 32 && 
         positionY == 0) {
         direction = Direction.DOWN;
       } else if (
-        positionX >= logicalSize.width &&
-        positionY >= logicalSize.height
+        positionX >= logicalSize.width - 32 &&
+        positionY >= logicalSize.height - 48
       ) {
         direction = Direction.BACKWARD;
       } else if (
         positionX == 0 && positionY >= 
-        logicalSize.height) {
+        logicalSize.height - 48) {
         direction = Direction.UP;
       }
 
