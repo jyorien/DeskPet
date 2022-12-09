@@ -10,8 +10,8 @@
   import { Direction } from "./lib/Direction";
   import Pet from "./lib/Pet.svelte";
 
-  const interval = 350;
-  const movementSpeed = 30;
+  const interval = 50;
+  const movementSpeed = 2;
   let positionX = 0;
   let positionY = 0;
   let direction = Direction.FORWARD;
